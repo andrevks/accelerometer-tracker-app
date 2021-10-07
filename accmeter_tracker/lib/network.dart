@@ -1,40 +1,23 @@
-import 'dart:convert';
-import 'dart:async';
-
 import 'package:http/http.dart' as http;
-import 'Post.dart';
-import 'album.dart';
+import 'dart:convert';
 
-Future<Post> fetchPost(String num) async {
-  final response =
-      await http.get('https://jsonplaceholder.typicode.com/posts/${num}');
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    return Post.fromJson(json.decode(response.body));
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load load album');
-  }
-}
-
-Future<Album> createAlbum(String title) async {
-  final response =
-      await http.post(Uri.parse('https://jsonplaceholder.typicode.com/albums'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(<String, String>{'title': title}));
-
-  if (response.statusCode == 201) {
-    // If the server did return a 201 CREATED response,
-    // then parse the JSON.
-    return Album.fromJson(jsonDecode(response.body));
-  } else {
-    // If the server did not return a 201 CREATED response,
-    // then throw an exception.
-    throw Exception('Failed to create album.');
+postData() async {
+  try {
+    // String URL = 'https://jsonplaceholder.typicode.com/posts';
+    String URL = 'http://192.168.1.4:5050/accmeters';
+    var response = await http.post(Uri.parse(URL), headers: <String, String>{
+      "Access-Control-Allow-Origin": "*",
+    }, body: {
+      // "id": 1.toString(),
+      // "name": "Saheb",
+      // "email": "someemail@gmail.com"
+      "x": 666.6.toString(),
+      "y": 0.07777.toString(),
+      "z": 9.888888.toString(),
+      "title": "accelerometer values"
+    });
+    print(response.body);
+  } catch (e) {
+    print(e);
   }
 }
