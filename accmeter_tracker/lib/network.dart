@@ -5,7 +5,7 @@ import 'accelerometer_model.dart';
 
 Future<AccelerometerModel> createCoord(
     String title, String x, String y, String z) async {
-  const String apiURL = 'http://192.168.1.4:5050/accmeters';
+  const String apiURL = 'http://192.168.1.5:5050/accmeters';
 
   final response =
       await http.post(apiURL, body: {"x": x, "y": y, "z": z, "title": title});
