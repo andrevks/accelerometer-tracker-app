@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'network.dart';
+import 'accelerometer_model.dart';
 
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() {
-    //O Stateful pede um estado (State)
+    //O Stateful pede um estado (State).
     //Entao, a gente precisa criar uma outra classe
     //para que possa ser retornada aqui e
     //Funcionar como um estado que vai ser sempre
@@ -16,9 +17,10 @@ class HomePage extends StatefulWidget {
 
 //No State (estado) precisa passar o nome da classe
 //de StateFulWidget que eh a classe que vai nos
-//referenciaR
+//referenciar
 class HomePageState extends State<HomePage> {
   int count = 0;
+  // AccelerometerModel? _acc;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,10 +30,25 @@ class HomePageState extends State<HomePage> {
       body: Center(
           child: GestureDetector(
         child: Text(
-          'Contador: $count',
+          'Post Accelerometer Values',
           style: TextStyle(fontSize: 30),
         ),
-        onTap: postData
+        onTap: () async {
+          final String title = 'Acc Values';
+          final String x = "65.44";
+          final String y = "0.021234232";
+          final String z = "9.8123432";
+
+          final AccelerometerModel acc = await createCoord(title, x, y, z);
+          // print(acc.x);
+          // print(acc.y);
+          // print(acc.z);
+
+          // setState(() {
+          //   _acc = acc;
+          // });
+          print(acc);
+        }
         // () {
         //   setState(() {
         //     count++;

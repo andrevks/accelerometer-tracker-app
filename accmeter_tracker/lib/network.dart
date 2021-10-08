@@ -1,23 +1,39 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-postData() async {
-  try {
-    // String URL = 'https://jsonplaceholder.typicode.com/posts';
-    String URL = 'http://192.168.1.4:5050/accmeters';
-    var response = await http.post(Uri.parse(URL), headers: <String, String>{
-      "Access-Control-Allow-Origin": "*",
-    }, body: {
-      // "id": 1.toString(),
-      // "name": "Saheb",
-      // "email": "someemail@gmail.com"
-      "x": 666.6.toString(),
-      "y": 0.07777.toString(),
-      "z": 9.888888.toString(),
-      "title": "accelerometer values"
-    });
-    print(response.body);
-  } catch (e) {
-    print(e);
+import 'accelerometer_model.dart';
+
+Future<AccelerometerModel> createCoord(
+    String title, String x, String y, String z) async {
+  const String apiURL = 'http://192.168.1.4:5050/accmeters';
+
+  final response =
+      await http.post(apiURL, body: {"x": x, "y": y, "z": z, "title": title});
+
+  if (response.statusCode == 201 || response.statusCode == 200) {
+    final String responseString = response.body;
+    return accelerometerModelFromJson(responseString);
+  } else {
+    throw Exception('Failed to load Accelerometer values');
   }
 }
+
+
+// postData() async {
+//   try {
+//     // String URL = 'https://jsonplaceholder.typicode.com/posts';
+//     String URL = 'http://192.168.1.4:5050/accmeters';
+//     var response = await http.post(Uri.parse(URL), body: {
+//       // "id": 1.toString(),
+//       // "name": "Saheb",
+//       // "email": "someemail@gmail.com"
+//       "x": "131.2344",
+//       "y": "0.021234232",
+//       "z": "9.8123432",
+//       "title": "accelerometer values"
+//     });
+//     print(response.body);
+//   } catch (e) {
+//     print(e);
+//   }
+// }

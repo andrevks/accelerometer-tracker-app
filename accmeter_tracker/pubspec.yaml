@@ -31,7 +31,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   # sensors: ^0.4.1+7   #//add this flutter sensor plugin
-  sensors_plus: ^1.1.0
+  # sensors_plus: ^1.1.0
   http: ^0.12.0+2
 
 
