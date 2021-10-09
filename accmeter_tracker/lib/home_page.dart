@@ -34,10 +34,10 @@ class HomePageState extends State<HomePage> {
           style: TextStyle(fontSize: 30),
         ),
         onTap: () async {
-          final String title = 'Acc Values';
-          final String x = "65.44";
-          final String y = "0.021234232";
-          final String z = "9.8123432";
+          const String title = 'Acc Values';
+          const String x = "65.44";
+          const String y = "0.021234232";
+          const String z = "9.8123432";
 
           final AccelerometerModel acc = await createCoord(title, x, y, z);
           // print(acc.x);
@@ -47,7 +47,9 @@ class HomePageState extends State<HomePage> {
           // setState(() {
           //   _acc = acc;
           // });
-          print(acc);
+          print(acc.x);
+          print(acc.y);
+          print(acc.z);
         }
         // () {
         //   setState(() {
