@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 import 'network.dart';
 import 'accelerometer_model.dart';
+
+import 'package:sensors_plus/sensors_plus.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -19,11 +22,21 @@ class HomePage extends StatefulWidget {
 //de StateFulWidget que eh a classe que vai nos
 //referenciar
 class HomePageState extends State<HomePage> {
-  int count = 0;
-  String x = "65.44";
-  String y = "0.021234232";
-  String z = "9.8123432";
-  // AccelerometerModel? _acc;
+  double x = 0.1, y = 0.1, z = 0.0;
+
+  @override
+  void initState() {
+    //O sensor começa a enviar dados assim que o app começar
+    super.initState();
+    gyroscopeEvents.listen((event) {
+      setState(() {
+        x = event.x;
+        y = event.y;
+        z = event.z;
+      }); // [GyroscopeEvent (x: 0.0, y: 0.0, z: 0.0)]
+    }); //Get the sensor data and set then to the data types
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,23 +51,16 @@ class HomePageState extends State<HomePage> {
         ),
         onTap: () async {
           const String title = 'Acc Values';
+          String x_str = x.toStringAsFixed(2);
+          String y_str = y.toStringAsFixed(2);
+          String z_str = z.toStringAsFixed(2);
+          print(z);
+          print(z_str);
 
-          final AccelerometerModel acc = await createCoord(title, x, y, z);
-
-          // setState(() {
-          //   _acc = acc;
-          // });
-          print(acc.x);
-          print(acc.y);
+          final AccelerometerModel acc =
+              await createCoord(title, x_str, y_str, z_str);
           print(acc.z);
-        }
-        // () {
-        //   setState(() {
-        //     count++;
-        //     // postData();
-        //   });
-        // }
-        ,
+        },
       )),
     );
 
