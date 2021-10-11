@@ -20,6 +20,9 @@ class HomePage extends StatefulWidget {
 //referenciar
 class HomePageState extends State<HomePage> {
   int count = 0;
+  String x = "65.44";
+  String y = "0.021234232";
+  String z = "9.8123432";
   // AccelerometerModel? _acc;
   @override
   Widget build(BuildContext context) {
@@ -35,14 +38,8 @@ class HomePageState extends State<HomePage> {
         ),
         onTap: () async {
           const String title = 'Acc Values';
-          const String x = "65.44";
-          const String y = "0.021234232";
-          const String z = "9.8123432";
 
           final AccelerometerModel acc = await createCoord(title, x, y, z);
-          // print(acc.x);
-          // print(acc.y);
-          // print(acc.z);
 
           // setState(() {
           //   _acc = acc;
