@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'network.dart';
 import 'accelerometer_model.dart';
+import 'dart:async';
 
 import 'package:sensors_plus/sensors_plus.dart';
 
@@ -44,50 +45,30 @@ class HomePageState extends State<HomePage> {
     String y_str = y.toStringAsFixed(2);
     String z_str = z.toStringAsFixed(2);
 
-    print(z);
-    print(z_str);
-    if (z < 180) {
-      title = 'Direita';
+    if (z >= 3.14) {
+      title = 'Horizontal';
     } else {
-      title = 'Esquerda';
+      title = 'Vertical';
     }
+
+    Timer.periodic(Duration(seconds: 5), (Timer t) async {
+      final AccelerometerModel acc =
+          await createCoord(title, x_str, y_str, z_str);
+      print(x_str);
+      print(y_str);
+      print(z_str);
+    });
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Home Page'),
       ),
       body: Center(
-          child: GestureDetector(
         child: Text(
-          'Z: $z_str -> $title',
+          '$x_str | $y_str | Z:$z_str -> $title',
           style: TextStyle(fontSize: 30),
         ),
-        onTap: () async {
-          // const String title = 'Acc Values';
-          // String x_str = x.toStringAsFixed(2);
-          // String y_str = y.toStringAsFixed(2);
-          // String z_str = z.toStringAsFixed(2);
-          print(z);
-          print(z_str);
-
-          final AccelerometerModel acc =
-              await createCoord(title, x_str, y_str, z_str);
-          print(acc.z);
-        },
-      )),
+      ),
     );
-
-    // return Container(
-    //   child:
-    //   Center(
-    //       child: GestureDetector(
-    //     child: Text('Contador: $count'),
-    //     onTap: () {
-    //       setState(() {
-    //         count++;
-    //       });
-    //     },
-    //   )),
-    // );
   }
 }
