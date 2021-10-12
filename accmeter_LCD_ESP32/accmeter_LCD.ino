@@ -2,7 +2,7 @@
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 
-// LDC
+// LDC 
 #include <LiquidCrystal_I2C.h>
 
 // set the LCD number of columns and rows
@@ -30,7 +30,6 @@ void setup(void) {
   // turn on LCD backlight                      
   lcd.backlight();
 
-  
   //For displaying on the Serial Monitor
   Serial.begin(115200);
   //Initiate WiFi connection
@@ -52,9 +51,8 @@ void loop(void) {
   HTTPClient http;
   
   //The API URL
-  String request = "http://192.168.1.5:8085/accmeter";
+  String request = "http://192.168.1.4:8085/accmeter";
   
-
   //Start the request
   http.begin(request);
   
@@ -84,15 +82,15 @@ void loop(void) {
   lcd.print(doc["title"].as<char*>());
   
   delay(1000);
-  
+
   //Print parsed value on Serial Monitor
   Serial.println(doc["title"].as<char*>());
   
   //Close connection  
   http.end();
   
-  //Wait two seconds for the next information
-  delay(2000);
+  //Wait four seconds for the next information
+  delay(4000);
   
   lcd.clear();
 }
