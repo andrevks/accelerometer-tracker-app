@@ -5,7 +5,7 @@ import 'accelerometer_model.dart';
 
 Future<AccelerometerModel> createCoord(
     String title, String x, String y, String z) async {
-  const String apiURL = 'http://192.168.1.5:8085/accmeter';
+  const String apiURL = 'http://192.168.1.4:8085/accmeter';
 
   final response = await http.post(apiURL,
       body: json.encode({"x": x, "y": y, "z": z, "title": title}),
@@ -21,23 +21,3 @@ Future<AccelerometerModel> createCoord(
     throw Exception('Failed to load Accelerometer values');
   }
 }
-
-
-// postData() async {
-//   try {
-//     // String URL = 'https://jsonplaceholder.typicode.com/posts';
-//     String URL = 'http://192.168.1.4:5050/accmeters';
-//     var response = await http.post(Uri.parse(URL), body: {
-//       // "id": 1.toString(),
-//       // "name": "Saheb",
-//       // "email": "someemail@gmail.com"
-//       "x": "131.2344",
-//       "y": "0.021234232",
-//       "z": "9.8123432",
-//       "title": "accelerometer values"
-//     });
-//     print(response.body);
-//   } catch (e) {
-//     print(e);
-//   }
-// }

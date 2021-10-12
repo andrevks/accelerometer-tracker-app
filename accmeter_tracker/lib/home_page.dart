@@ -59,8 +59,10 @@ class HomePageState extends State<HomePage> {
 
           orientationStr = orientationPt[orientationStr].toString();
 
-          createCoord(orientationStr, '0.0', '0.0', '0.0');
-          print('Valor enviado');
+          createCoord(orientationStr, '0.0', '0.0', '0.0')
+              .then(
+                  (value) => print('Orientação Enviada (API): ${value.title}'))
+              .catchError((err) => print('Caught error: $err'));
 
           print('Nova orientação: $orientationStr ');
 
