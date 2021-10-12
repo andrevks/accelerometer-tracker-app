@@ -23,6 +23,7 @@ class HomePage extends StatefulWidget {
 //referenciar
 class HomePageState extends State<HomePage> {
   double x = 0.1, y = 0.1, z = 0.0;
+  String title = 'Acc Values';
 
   @override
   void initState() {
@@ -39,6 +40,18 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    String x_str = x.toStringAsFixed(2);
+    String y_str = y.toStringAsFixed(2);
+    String z_str = z.toStringAsFixed(2);
+
+    print(z);
+    print(z_str);
+    if (z < 180) {
+      title = 'Direita';
+    } else {
+      title = 'Esquerda';
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Home Page'),
@@ -46,14 +59,14 @@ class HomePageState extends State<HomePage> {
       body: Center(
           child: GestureDetector(
         child: Text(
-          'Post Accelerometer Values',
+          'Z: $z_str -> $title',
           style: TextStyle(fontSize: 30),
         ),
         onTap: () async {
-          const String title = 'Acc Values';
-          String x_str = x.toStringAsFixed(2);
-          String y_str = y.toStringAsFixed(2);
-          String z_str = z.toStringAsFixed(2);
+          // const String title = 'Acc Values';
+          // String x_str = x.toStringAsFixed(2);
+          // String y_str = y.toStringAsFixed(2);
+          // String z_str = z.toStringAsFixed(2);
           print(z);
           print(z_str);
 
