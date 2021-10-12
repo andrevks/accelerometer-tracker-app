@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sensors_plus/sensors_plus.dart';
+import 'package:native_device_orientation/native_device_orientation.dart';
+// import 'package:sensors_plus/sensors_plus.dart';
 import 'network.dart';
 import 'accelerometer_model.dart';
-import 'dart:async';
-
-import 'package:sensors_plus/sensors_plus.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -23,51 +21,59 @@ class HomePage extends StatefulWidget {
 //de StateFulWidget que eh a classe que vai nos
 //referenciar
 class HomePageState extends State<HomePage> {
-  double x = 0.1, y = 0.1, z = 0.0;
-  String title = 'Acc Values';
-
-  @override
-  void initState() {
-    //O sensor começa a enviar dados assim que o app começar
-    super.initState();
-    gyroscopeEvents.listen((event) {
-      setState(() {
-        x = event.x;
-        y = event.y;
-        z = event.z;
-      }); // [GyroscopeEvent (x: 0.0, y: 0.0, z: 0.0)]
-    }); //Get the sensor data and set then to the data types
-  }
+  bool useSensor = false;
 
   @override
   Widget build(BuildContext context) {
-    String x_str = x.toStringAsFixed(2);
-    String y_str = y.toStringAsFixed(2);
-    String z_str = z.toStringAsFixed(2);
+    String orientationStr = 'Preparando...';
 
-    if (z >= 3.14) {
-      title = 'Horizontal';
-    } else {
-      title = 'Vertical';
-    }
-
-    Timer.periodic(Duration(seconds: 5), (Timer t) async {
-      final AccelerometerModel acc =
-          await createCoord(title, x_str, y_str, z_str);
-      print(x_str);
-      print(y_str);
-      print(z_str);
-    });
+    Map<String, String> orientationPt = {
+      'NativeDeviceOrientation.portraitUp': 'Vertical para Cima',
+      'NativeDeviceOrientation.portraitDown': 'Vertical para Baixo',
+      'NativeDeviceOrientation.landscapeRight': 'Horizontal para Direita',
+      'NativeDeviceOrientation.landscapeLeft': 'Horizontal para Esquerda',
+      'NativeDeviceOrientation.Unknown': 'Desconhecido'
+    };
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Page'),
-      ),
-      body: Center(
-        child: Text(
-          '$x_str | $y_str | Z:$z_str -> $title',
-          style: TextStyle(fontSize: 30),
-        ),
+      appBar: AppBar(title: Text('Smartphone Orientation'), actions: <Widget>[
+        Center(child: Text('Sensor: ')),
+        Switch(
+          value: useSensor,
+          onChanged: (val) => {setState(() => useSensor = val)},
+          activeColor: Colors.green,
+          activeTrackColor: Colors.deepOrange,
+          inactiveTrackColor: Colors.red[100],
+          inactiveThumbColor: Colors.red,
+        )
+      ]),
+      body: NativeDeviceOrientationReader(
+        builder: (content) {
+          //Permite controlar quando o dispositivo começa a ouvir
+          //por mudanças na orientação
+          final orientation =
+              NativeDeviceOrientationReader.orientation(content);
+
+          //Tradução, abstração da biblioteca
+          String orientationStr = orientation.toString();
+
+          orientationStr = orientationPt[orientationStr].toString();
+
+          createCoord(orientationStr, '0.0', '0.0', '0.0');
+          print('Valor enviado');
+
+          print('Nova orientação: $orientationStr ');
+
+          return Center(
+              child: Text(
+            '$orientationStr\n',
+            style: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+            ),
+          ));
+        },
+        useSensor: useSensor,
       ),
     );
   }
