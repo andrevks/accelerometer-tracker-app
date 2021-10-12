@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:native_device_orientation/native_device_orientation.dart';
-// import 'package:sensors_plus/sensors_plus.dart';
 import 'network.dart';
 import 'accelerometer_model.dart';
 
@@ -25,13 +24,11 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    String orientationStr = 'Preparando...';
-
     Map<String, String> orientationPt = {
-      'NativeDeviceOrientation.portraitUp': 'Vertical para Cima',
-      'NativeDeviceOrientation.portraitDown': 'Vertical para Baixo',
-      'NativeDeviceOrientation.landscapeRight': 'Horizontal para Direita',
-      'NativeDeviceOrientation.landscapeLeft': 'Horizontal para Esquerda',
+      'NativeDeviceOrientation.portraitUp': 'Vertical Cima',
+      'NativeDeviceOrientation.portraitDown': 'Vertical Baixo',
+      'NativeDeviceOrientation.landscapeRight': 'Horizontal Direita',
+      'NativeDeviceOrientation.landscapeLeft': 'Horizontal Esquerda',
       'NativeDeviceOrientation.Unknown': 'Desconhecido'
     };
 
@@ -55,20 +52,20 @@ class HomePageState extends State<HomePage> {
               NativeDeviceOrientationReader.orientation(content);
 
           //Tradução, abstração da biblioteca
-          String orientationStr = orientation.toString();
+          String oriStr = orientation.toString();
 
-          orientationStr = orientationPt[orientationStr].toString();
+          oriStr = orientationPt[oriStr].toString();
 
-          createCoord(orientationStr, '0.0', '0.0', '0.0')
+          createCoord(oriStr, '0.0', '0.0', '0.0')
               .then(
                   (value) => print('Orientação Enviada (API): ${value.title}'))
               .catchError((err) => print('Caught error: $err'));
 
-          print('Nova orientação: $orientationStr ');
+          print('Nova orientação: $oriStr ');
 
           return Center(
               child: Text(
-            '$orientationStr\n',
+            '$oriStr\n',
             style: TextStyle(
               fontSize: 26,
               fontWeight: FontWeight.bold,
