@@ -5,39 +5,38 @@
 // LDC 
 #include <LiquidCrystal_I2C.h>
 
-// set the LCD number of columns and rows
+//Seta o número de colunas e linhas do LCD
 int lcdColumns = 16;
 int lcdRows = 2;
 
-// set LCD address, number of columns and rows
+// Seta o endereço, numero de colunas e linhas 
 LiquidCrystal_I2C lcd(0x3F, lcdColumns, lcdRows);  
 
 //LCD
 
-//Provide your own WiFi credentials
+//Fornece as credenciais da rede WIFI
 const char* ssid = "WIFI NAME";
 const char* password = "PASSWORD";
 
-//String for storing server response
+//String para guardar a resposta da API
 String response = "";
-//JSON document
+//Documento JSON que aloca espaço dinamicamente
 DynamicJsonDocument doc(2048);
  
  
 void setup(void) {
-  // initialize LCD
+  // Inicializa o LCD
   lcd.init();
-  // turn on LCD backlight                      
+  // Liga o a luz de fundo                     
   lcd.backlight();
-
-  //For displaying on the Serial Monitor
+  //Começar uma comunicação serial para monitorar 
   Serial.begin(115200);
-  //Initiate WiFi connection
+  //Inicializa a conexão WIFI
   WiFi.mode(WIFI_STA);
+  //Passa o nome e a senha do WIFI
   WiFi.begin(ssid, password);
   Serial.println("");
- 
-  // Wait for connection
+  // Espera pela conexão
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
@@ -47,50 +46,39 @@ void setup(void) {
 }
  
 void loop(void) {
-  //Initiate HTTP client
+  //Cria a variável para conexão HTTP
   HTTPClient http;
-  
-  //The API URL
+  //A URL da API
   String request = "http://192.168.1.4:8085/accmeter";
-  
-  //Start the request
+  //Começa a requisição para a API
   http.begin(request);
-  
+  //Adiciona Headers com informações necessárias para a conexão
   http.addHeader("Content-Type", "application/json");
   http.addHeader("Accept", "application/json");
-  
-  //Use HTTP GET request
+  //Escolhe o método GET para fazer a requisição
   http.GET();
-  
-  //Response from server
+  //Recebe a resposta da requisição GET 
   response = http.getString();
-  
+  //Imprime a resposta no monitor serial
   Serial.println(response);
-  //Parse JSON, read error if any
-  
+  //Separa as variaveis do JSON, caso não houver erros
   DeserializationError error = deserializeJson(doc, response);
   if(error) {
      Serial.print(F("deserializeJson() failed: "));
      Serial.println(error.f_str());
      return;
   }
-  
-  // set cursor to first column, first row
+  //Seta o cursor para a primeira posição
+  //Primeira linha
   lcd.setCursor(0, 0);
-  
-  // print message
+  // Imprime a orientação na tela LCD
   lcd.print(doc["title"].as<char*>());
-  
   delay(1000);
-
-  //Print parsed value on Serial Monitor
+  //Imprime a orientação no monitor serial
   Serial.println(doc["title"].as<char*>());
-  
-  //Close connection  
+  //Termina a conexão HTTP  
   http.end();
-  
-  //Wait four seconds for the next information
+  //Espera por 4 segundos
   delay(4000);
-  
   lcd.clear();
 }
