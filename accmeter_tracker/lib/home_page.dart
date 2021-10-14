@@ -21,7 +21,6 @@ class HomePage extends StatefulWidget {
 //referenciar
 class HomePageState extends State<HomePage> {
   bool useSensor = false;
-
   @override
   Widget build(BuildContext context) {
     Map<String, String> orientationPt = {
@@ -31,7 +30,6 @@ class HomePageState extends State<HomePage> {
       'NativeDeviceOrientation.landscapeLeft': 'Horizontal Esquerda',
       'NativeDeviceOrientation.Unknown': 'Desconhecido'
     };
-
     return Scaffold(
       appBar: AppBar(title: Text('Smartphone Orientation'), actions: <Widget>[
         Center(child: Text('Sensor: ')),
@@ -50,19 +48,14 @@ class HomePageState extends State<HomePage> {
           //por mudanças na orientação
           final orientation =
               NativeDeviceOrientationReader.orientation(content);
-
           //Tradução, abstração da biblioteca
           String oriStr = orientation.toString();
-
           oriStr = orientationPt[oriStr].toString();
-
           createCoord(oriStr, '0.0', '0.0', '0.0')
               .then(
                   (value) => print('Orientação Enviada (API): ${value.title}'))
               .catchError((err) => print('Caught error: $err'));
-
           print('Nova orientação: $oriStr ');
-
           return Center(
               child: Text(
             '$oriStr\n',

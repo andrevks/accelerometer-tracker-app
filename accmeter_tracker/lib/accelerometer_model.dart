@@ -1,12 +1,7 @@
-// To parse this JSON data, do
-//
-//     final accelerometerModel = accelerometerModelFromJson(jsonString);
-
 import 'dart:convert';
 
 AccelerometerModel accelerometerModelFromJson(String str) =>
     AccelerometerModel.fromJson(json.decode(str));
-
 String accelerometerModelToJson(AccelerometerModel data) =>
     json.encode(data.toJson());
 
@@ -17,12 +12,10 @@ class AccelerometerModel {
     required this.y,
     required this.z,
   });
-
   String title;
   String x;
   String y;
   String z;
-
   factory AccelerometerModel.fromJson(Map<String, dynamic> json) =>
       AccelerometerModel(
         title: json["title"],
@@ -30,7 +23,6 @@ class AccelerometerModel {
         y: json["y"],
         z: json["z"],
       );
-
   Map<String, dynamic> toJson() => {
         "title": title,
         "x": x,

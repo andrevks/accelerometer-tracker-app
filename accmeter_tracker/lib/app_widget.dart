@@ -6,7 +6,6 @@ import 'home_page.dart';
 class AppWidget extends StatelessWidget {
   //Vai Criar no construtor (AppWidget) cada atributo que tiver
   //a keyword final
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
