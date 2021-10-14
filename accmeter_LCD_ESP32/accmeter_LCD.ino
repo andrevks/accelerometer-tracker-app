@@ -5,22 +5,22 @@
 // LDC 
 #include <LiquidCrystal_I2C.h>
 
-// set the LCD number of columns and rows
+//Seta o número de colunas e linhas do LCD
 int lcdColumns = 16;
 int lcdRows = 2;
 
-// set LCD address, number of columns and rows
+// Seta o endereço, numero de colunas e linhas 
 LiquidCrystal_I2C lcd(0x3F, lcdColumns, lcdRows);  
 
 //LCD
 
-//Provide your own WiFi credentials
+//Fornece as credenciais da rede WIFI
 const char* ssid = "WIFI NAME";
 const char* password = "PASSWORD";
 
-//String for storing server response
+//String para guardar a resposta da API
 String response = "";
-//JSON document
+//Documento JSON que aloca espaço dinamicamente
 DynamicJsonDocument doc(2048);
  
  
