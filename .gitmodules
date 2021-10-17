@@ -1,0 +1,3 @@
+[submodule "smartphone-orientation-api"]
+	path = smartphone-orientation-api
+	url = https://github.com/andrevks/smartphone-orientation-api.git
