@@ -1,6 +1,9 @@
-# accelerometer-tracker-app
-Accelerometer Tracker App made in Flutter 
+# smartphone-orientation-tracker
+Orientation Tracker System made in Flutter, Express.js and C (to ESP 32)
 
+## How does the system works ?
+- [📃`Article` in Portuguese](https://github.com/andrevks/smartphone-orientation-tracker/blob/main/Article_AndreGeraldo_Monitoramento_Orienta__o_Celular_FLUTTER_ESP32.pdf)
+- [🎞️ `Video` in Portuguese](https://youtu.be/t5AAW5810l8)
 
 ## Requirements 
 
@@ -8,5 +11,3 @@ Accelerometer Tracker App made in Flutter
 - Install Arduino IDE and ESP 32 
 - Install Nodejs
 
-
-Soon links and further instructions  will be written...
